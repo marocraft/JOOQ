@@ -23,7 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<org.jooq.version>3.10.4</org.jooq.version>
+		<org.jooq.version>3.10.4 </org.jooq.version>
 <!-- 		<mysql.jdbc.url>jdbc:mysql://localhost:3306/jooqtest</mysql.jdbc.url> -->
 <!-- 		<mysql.jdbc.user>root</mysql.jdbc.user> -->
 <!-- 		<mysql.jdbc.password></mysql.jdbc.password> -->
