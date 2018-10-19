@@ -32,33 +32,11 @@
 	<dependencies>
 		
 		<dependency>
-		  <groupId>org.jooq</groupId>
-		  <artifactId>jooq</artifactId>
-		  <version>3.10.4</version>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jooq</artifactId>
 		</dependency>
 		
-		<dependency>
-		  <groupId>org.jooq</groupId>
-		  <artifactId>jooq-meta</artifactId>
-		  <version>3.10.4</version>
-		</dependency>
 		
-		<dependency>
-		  <groupId>org.jooq</groupId>
-		  <artifactId>jooq-codegen</artifactId>
-		  <version>3.10.4</version>
-		</dependency>
-				
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -69,9 +47,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
+		
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>4.2.5.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -79,110 +59,98 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.30</version>
+		    <version>5.1.6</version>
 		</dependency>
 	
-		<dependency>
-	    <groupId>com.h2database</groupId>
-	   	 <artifactId>h2</artifactId>
-	   	 <version>1.4.191</version>
-		</dependency>
 	
-
 	</dependencies>
-
+	
+	
+	
 		<build>
 			<plugins>
 				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
-	
-				<plugin>
-				    <groupId>org.codehaus.mojo</groupId>
-				    <artifactId>sql-maven-plugin</artifactId>
-				    <version>1.5</version>
-				    <executions>
-				        <execution>
-				        
-				             <configuration>
-				             <driver>com.mysql.jdbc.Driver</driver>
-				                <url>${spring.datasource.url}</url>
-				                <username>${spring.datasource.username}</username>
-				                <password>${spring.datasource.password}</password>
-				                <srcFiles>
-				                    <srcFile>src/main/resources/schema.sql</srcFile>
-				                </srcFiles>
-				            </configuration>
-				           
-				        </execution>
-				    </executions>
-				    
-				    <dependencies>
-				        <dependency>
-				            <groupId>com.h2database</groupId>
-				            <artifactId>h2</artifactId>
-				            <version>1.4.191</version>
-				        </dependency>
-				    </dependencies>
-				</plugin>
-						<plugin>
-					    <groupId>org.codehaus.mojo</groupId>
+						<groupId>org.codehaus.mojo</groupId>
 					    <artifactId>properties-maven-plugin</artifactId>
 					    <version>1.0.0</version>
-					    <executions>
-					        <execution>
-					            <phase>initialize</phase>
-					            <goals>
-					                <goal>read-project-properties</goal>
-					            </goals>
-					            <configuration>
-					                <files>
-					                    <file>src/main/resources/application.properties</file>
-					                </files>
-					            </configuration>
-					        </execution>
-					    </executions>
+					<executions>
+				        <execution>
+				          
+				          <configuration>
+                            <files>
+                                <file>src/main/resources/application.properties</file>
+                            </files>
+                        </configuration>
+				        </execution>
+				    </executions>
 				</plugin>
+				
+				
+				    <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
+                
+
+                <executions>
+                    <execution>
+                       
+                        <configuration>
+                  	        <driver>${spring.datasource.driverClassName}</driver>
+                            <url>${spring.datasource.url}</url>
+                            <username>${spring.datasource.username}</username>
+                            <password>${spring.datasource.password}</password>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/resources/schema.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+
+             
+            </plugin>
+				
 	
-	<plugin>
-	    <groupId>org.jooq</groupId>
-	    <artifactId>jooq-codegen-maven</artifactId>
-	    <version>${org.jooq.version}</version>
-	    <dependencies>
-					<dependency>
-						<groupId>org.jooq</groupId>
-						<artifactId>jooq-meta-extensions</artifactId>
-						<version>3.11.4</version>
-					</dependency>
-				</dependencies>
-	    <executions>
-	        <execution>
-	            <phase>generate-sources</phase>
-	            <goals>
-	                <goal>generate</goal>
-	            </goals>
-	            <configuration>
-	                <jdbc>
-	              	<driver>com.mysql.jdbc.Driver</driver>
-	                    <url>${spring.datasource.url}</url>
-	                    <user>${spring.datasource.username}</user>
-	                    <password>${spring.datasource.password}</password>
-	                </jdbc>
-	                <generator>
-	                    <target>
-	                        <packageName>com.baeldung.jooq.introduction.jooqtest</packageName>
-	                        <directory>src/main/java</directory>
-	                    </target>
-	                </generator>
-	            </configuration>
-	        </execution>
-	    </executions>
-	</plugin>
+				
+				<plugin>
+				    <groupId>org.jooq</groupId>
+				    <artifactId>jooq-codegen-maven</artifactId>
+				 	<version> 3.3.2</version>  
+				    <executions>
+				        <execution>
+				            
+				            <configuration>
+				                <jdbc>
+				                     <driver>${spring.datasource.driverClassName}</driver>
+				                     <url>${spring.datasource.url}</url>
+                            <username>${spring.datasource.username}</username>
+                            <password>${spring.datasource.password}</password>
+				                </jdbc>
+				                <generator>
+				                    <target>
+				                        <packageName>com.example.demo</packageName>
+				                        <directory>src/main/java</directory>
+				                    </target>
+				                </generator>
+				            </configuration>
+				        </execution>
+				    </executions>
+				</plugin>
+				
 		</plugins>
 	</build>
+	
+	
 
 
 </project>
+
